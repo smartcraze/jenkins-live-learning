@@ -1,0 +1,7 @@
+
+services:
+  app:
+    container_name: bun-app
+    image : smartcraze/bun-app:latest 
+    ports:
+      - 3000:3000
