@@ -1,44 +1,32 @@
-
 pipeline {
     agent any
-
-    stages{
-        stage("checkout code"){
-
-            steps {
-                echo 'Clonning the repository'
-                sh 'git clone https://github.com/smartcraze/jenkins-live-learning.git'
-            }
-            steps{
-                sh 'bun install'
-            }
-            steps{
-                echo 'pipeline finished'
-            }
-
-
-        }
-        stage(" docker build and push "){
-            steps{
-                echo 'docker login'
-            }
-            steps{
-                echo 'docker build'
-            }
-            steps{
-                echo 'docker tag'
-            }
-            steps{
-                echo 'docker push'
-            }
-        }
-
-        stage("finished"){
-            steps{
-                echo 'finished pipeline'
-            }
-        }
-
-    }
     
+    stages {
+        stage("Checkout") {
+            steps {
+                echo "Cloning repo"
+                checkout scm
+            }
+        }
+
+        stage("Install deps") {
+            steps {
+                sh '''
+                bun install
+                '''
+            }
+        }
+
+        stage("Docker build and push") {
+            steps {
+                echo "Building and pushing Docker image"
+            }
+        }
+
+        stage("Done") {
+            steps {
+                echo "Pipeline finished"
+            }
+        }
+    }
 }
